@@ -1,3 +1,13 @@
+// This is a file to learn javascript
+// To run this file use the command : node test.js
+// To run this file in browser just link this file to html file using <script> tag
+// sudo apt install nodejs
+// node --version
+// npm --version
+
+
+console.log("Welcome to javascript  world  ____ This is console log");
+
 // <!-- <!-- <script> -->
 //     <!-- console.log("printstar"); 
 //     alert("error");
@@ -367,18 +377,16 @@ var arr=[1,5,8,6,"uiruri",35,"as",4];
 
 
 // JSON in javascript
-obj= {name:"Rohan",length:'5'}
-// To Change Object to string
-jso = JSON.stringify(obj)
-console.log(jso)
-console.log(typeof jso)
+// obj= {name:"Rohan",length:'5'}
+// // To Change Object to string
+// jso = JSON.stringify(obj)
+// console.log(jso)
+// console.log(typeof jso)
 
-// To Change String To Object
-parsed = JSON.parse(`{"name":"Rohan","length":'5'}`) // Does Notb reqire Single quates
-// NOTE : JSON only required double quotes("") to convert object
-console.log(parsed)
-
-
+// // To Change String To Object
+// parsed = JSON.parse(`{"name":"Rohan","length":'5'}`) // Does Notb reqire Single quates
+// // NOTE : JSON only required double quotes("") to convert object
+// console.log(parsed)
 
 
 // ECMA Script : The stander of javascript
