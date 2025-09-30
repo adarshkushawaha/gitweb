@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details Collection - Firebase Storage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .input-group {
+            transition: all 0.3s ease;
+        }
+        
+        .input-group:focus-within {
+            transform: translateY(-2px);
+        }
+        
+        .success-message {
+            background: linear-gradient(135deg, #10b981, #059669);
+            animation: slideIn 0.5s ease;
+        }
+        
+        .error-message {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .skill-input {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-input:focus {
+            border-color: #667eea;
+            background: white;
+        }
+        
+        .project-item {
+            background: linear-gradient(145deg, #f1f5f9, #e2e8f0);
+            border-left: 4px solid #667eea;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .firebase-status {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg">
+    <div class="min-h-screen py-8 px-4">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-white mb-4">User Details Collection</h1>
+                <p class="text-white/80 text-lg">Data will be securely stored in Firebase</p>
+                <div id="firebaseStatus" class="firebase-status text-white px-4 py-2 rounded-full text-sm font-medium mt-4 inline-block">
+                    🔥 Firebase Connected
+                </div>
+            </div>
+
+            <!-- Form Container -->
+            <div class="form-container rounded-2xl shadow-2xl p-8">
+                <form id="userForm" class="space-y-6">
+                    <!-- Basic Information -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="input-group">
+                            <label class="block text-gray-700 font-semibold mb-2">Full Name *</label>
+                            <input type="text" id="name" name="name" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                        </div>
+                        <div class="input-group">
+                            <label class="block text-gray-700 font-semibold mb-2">Email Address *</label>
+                            <input type="email" id="email" name="email" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Education -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="input-group">
+                            <label class="block text-gray-700 font-semibold mb-2">Degree *</label>
+                            <input type="text" id="degree" name="degree" required 
+                                   placeholder="e.g., B.Tech AI & DS"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                        </div>
+                        <div class="input-group">
+                            <label class="block text-gray-700 font-semibold mb-2">College/University *</label>
+                            <input type="text" id="college" name="college" required 
+                                   placeholder="e.g., IIT Jodhpur"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="input-group">
+                            <label class="block text-gray-700 font-semibold mb-2">GitHub Profile</label>
+                            <input type="url" id="github" name="github" 
+                                   placeholder="https://github.com/username"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                        </div>
+                        <div class="input-group">
+                            <label class="block text-gray-700 font-semibold mb-2">LinkedIn Profile</label>
+                            <input type="url" id="linkedin" name="linkedin" 
+                                   placeholder="https://www.linkedin.com/in/username"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="input-group">
+                        <label class="block text-gray-700 font-semibold mb-2">Skills *</label>
+                        <div class="space-y-3">
+                            <textarea id="skills" name="skills" required rows="3" 
+                                      placeholder="e.g., C, C++, Python, HTML, CSS, JavaScript, ReactJS, NodeJS, ExpressJS, MongoDB, SQL, Data Structures and Algorithms"
+                                      class="skill-input w-full px-4 py-3 rounded-lg resize-none focus:outline-none"></textarea>
+                            <p class="text-sm text-gray-500">Separate skills with commas</p>
+                        </div>
+                    </div>
+
+                    <!-- Projects -->
+                    <div class="input-group">
+                        <label class="block text-gray-700 font-semibold mb-4">Projects</label>
+                        <div id="projectsContainer" class="space-y-3">
+                            <div class="project-item p-4 rounded-lg">
+                                <input type="text" name="project" placeholder="Project name (e.g., Portfolio Website)" 
+                                       class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            </div>
+                        </div>
+                        <button type="button" id="addProject" class="mt-3 text-purple-600 hover:text-purple-800 font-medium">
+                            + Add Another Project
+                        </button>
+                    </div>
+
+                    <!-- AI/ML Projects -->
+                    <div class="input-group">
+                        <label class="block text-gray-700 font-semibold mb-2">AI/ML Projects (Optional)</label>
+                        <textarea id="aiProjects" name="aiProjects" rows="4" 
+                                  placeholder="Describe any AI/ML projects you're working on or planning..."
+                                  class="skill-input w-full px-4 py-3 rounded-lg resize-none focus:outline-none"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center pt-6">
+                        <button type="submit" id="submitBtn"
+                                class="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:from-purple-700 hover:to-blue-700 transform hover:scale-105 transition-all duration-300 shadow-lg">
+                            <span id="submitText">Save to Firebase</span>
+                            <span id="submitLoader" class="loading hidden ml-2"></span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Success Message -->
+                <div id="successMessage" class="hidden success-message text-white p-6 rounded-lg mt-6">
+                    <div class="flex items-center">
+                        <div class="text-2xl mr-3">✅</div>
+                        <div>
+                            <h3 class="font-semibold text-lg">Success!</h3>
+                            <p>Your details have been saved to Firebase successfully.</p>
+                            <p class="text-sm mt-1 opacity-90">Document ID: <span id="documentId"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Message -->
+                <div id="errorMessage" class="hidden error-message text-white p-6 rounded-lg mt-6">
+                    <div class="flex items-center">
+                        <div class="text-2xl mr-3">❌</div>
+                        <div>
+                            <h3 class="font-semibold text-lg">Error!</h3>
+                            <p id="errorText">Something went wrong. Please try again.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stored Data Preview -->
+            <div id="dataPreview" class="hidden mt-8 bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Recently Stored Data</h3>
+                <div class="bg-gray-100 p-4 rounded-lg overflow-x-auto">
+                    <pre id="dataContent" class="text-sm text-gray-700"></pre>
+                </div>
+                <div class="mt-4 flex space-x-4">
+                    <button id="viewAllData" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        View All Stored Data
+                    </button>
+                    <button id="exportData" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                        Export as JSON
+                    </button>
+                </div>
+            </div>
+
+            <!-- All Data Display -->
+            <div id="allDataDisplay" class="hidden mt-8 bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">All Stored Records</h3>
+                <div id="allDataContent" class="space-y-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Firebase configuration (configuration)
+        const firebaseConfig = {
+            apiKey: "TODO",
+            authDomain: "TODO.firebaseapp.com",
+            projectId: "TODO",
+            storageBucket: "TODO.appspot.com",
+            messagingSenderId: "TODO",
+            appId: "TODO",
+            measurementId: "TODO"
+
+        };
+
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Make Firebase functions available globally
+        window.db = db;
+        window.collection = collection;
+        window.addDoc = addDoc;
+        window.getDocs = getDocs;
+        window.serverTimestamp = serverTimestamp;
+
+        // Update status
+        document.getElementById('firebaseStatus').innerHTML = '🔥 Firebase Ready';
+    </script>
+
+    <script>
+        let projectCounter = 1;
+        let allStoredData = [];
+
+        // Add project functionality
+        document.getElementById('addProject').addEventListener('click', function() {
+            projectCounter++;
+            const container = document.getElementById('projectsContainer');
+            const newProject = document.createElement('div');
+            newProject.className = 'project-item p-4 rounded-lg';
+            newProject.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <input type="text" name="project" placeholder="Project name" 
+                           class="flex-1 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    <button type="button" onclick="removeProject(this)" class="text-red-500 hover:text-red-700 font-medium">
+                        Remove
+                    </button>
+                </div>
+            `;
+            container.appendChild(newProject);
+        });
+
+        // Remove project functionality
+        function removeProject(button) {
+            button.closest('.project-item').remove();
+        }
+
+        // Show loading state
+        function showLoading() {
+            document.getElementById('submitText').textContent = 'Saving...';
+            document.getElementById('submitLoader').classList.remove('hidden');
+            document.getElementById('submitBtn').disabled = true;
+        }
+
+        // Hide loading state
+        function hideLoading() {
+            document.getElementById('submitText').textContent = 'Save to Firebase';
+            document.getElementById('submitLoader').classList.add('hidden');
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        // Show success message
+        function showSuccess(docId) {
+            document.getElementById('documentId').textContent = docId;
+            document.getElementById('successMessage').classList.remove('hidden');
+            document.getElementById('errorMessage').classList.add('hidden');
+            setTimeout(() => {
+                document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        // Show error message
+        function showError(error) {
+            document.getElementById('errorText').textContent = error;
+            document.getElementById('errorMessage').classList.remove('hidden');
+            document.getElementById('successMessage').classList.add('hidden');
+            setTimeout(() => {
+                document.getElementById('errorMessage').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        // Form submission
+        document.getElementById('userForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            showLoading();
+            
+            try {
+                const formData = new FormData(this);
+                const userData = {};
+                
+                // Get basic form data
+                userData.name = formData.get('name');
+                userData.email = formData.get('email');
+                userData.emailUsername = formData.get('email').split('@')[0]; // Extract username part
+                userData.degree = formData.get('degree');
+                userData.college = formData.get('college');
+                userData.github = formData.get('github') || '';
+                userData.linkedin = formData.get('linkedin') || '';
+                userData.skills = formData.get('skills');
+                userData.aiProjects = formData.get('aiProjects') || '';
+                
+                // Get all projects
+                const projects = [];
+                const projectInputs = document.querySelectorAll('input[name="project"]');
+                projectInputs.forEach(input => {
+                    if (input.value.trim()) {
+                        projects.push(input.value.trim());
+                    }
+                });
+                userData.projects = projects;
+                
+                // Add timestamp
+                userData.createdAt = window.serverTimestamp();
+                userData.submittedAt = new Date().toISOString();
+                
+                // Save to Firebase
+                const docRef = await window.addDoc(window.collection(window.db, 'userDetails'), userData);
+                
+                // Show success
+                showSuccess(docRef.id);
+                
+                // Store data locally for preview
+                userData.id = docRef.id;
+                userData.createdAt = new Date().toISOString(); // For display purposes
+                allStoredData.push(userData);
+                
+                // Show data preview
+                showDataPreview(userData);
+                
+                // Reset form
+                this.reset();
+                resetProjects();
+                
+            } catch (error) {
+                console.error('Error saving to Firebase:', error);
+                showError('Failed to save data to Firebase. Please check your connection and try again.');
+            } finally {
+                hideLoading();
+            }
+        });
+
+        // Reset projects to single input
+        function resetProjects() {
+            const container = document.getElementById('projectsContainer');
+            container.innerHTML = `
+                <div class="project-item p-4 rounded-lg">
+                    <input type="text" name="project" placeholder="Project name (e.g., Portfolio Website)" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+            `;
+            projectCounter = 1;
+        }
+
+        // Show data preview
+        function showDataPreview(data) {
+            const preview = {
+                id: data.id,
+                name: data.name,
+                email: data.email,
+                emailUsername: data.emailUsername,
+                degree: data.degree,
+                college: data.college,
+                skills: data.skills,
+                projects: data.projects,
+                submittedAt: data.submittedAt
+            };
+            
+            document.getElementById('dataContent').textContent = JSON.stringify(preview, null, 2);
+            document.getElementById('dataPreview').classList.remove('hidden');
+        }
+
+        // View all data functionality
+        document.getElementById('viewAllData').addEventListener('click', async function() {
+            try {
+                const querySnapshot = await window.getDocs(window.collection(window.db, 'userDetails'));
+                const allData = [];
+                
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    data.id = doc.id;
+                    allData.push(data);
+                });
+                
+                displayAllData(allData);
+                
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                showError('Failed to fetch data from Firebase.');
+            }
+        });
+
+        // Display all data
+        function displayAllData(data) {
+            const container = document.getElementById('allDataContent');
+            container.innerHTML = '';
+            
+            if (data.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center">No data found.</p>';
+            } else {
+                data.forEach((item, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white p-4 rounded-lg shadow border-l-4 border-purple-500';
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-lg">${item.name}</h4>
+                            <span class="text-xs text-gray-500">#${index + 1}</span>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <p><strong>Email:</strong> ${item.email}</p>
+                                <p><strong>Username:</strong> ${item.emailUsername}</p>
+                                <p><strong>Degree:</strong> ${item.degree}</p>
+                                <p><strong>College:</strong> ${item.college}</p>
+                            </div>
+                            <div>
+                                <p><strong>Projects:</strong> ${Array.isArray(item.projects) ? item.projects.join(', ') : item.projects}</p>
+                                <p><strong>Skills:</strong> ${item.skills}</p>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-xs text-gray-400">
+                            <p>Document ID: ${item.id}</p>
+                            <p>Submitted: ${item.submittedAt || 'Unknown'}</p>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+            
+            document.getElementById('allDataDisplay').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('allDataDisplay').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        // Export data functionality
+        document.getElementById('exportData').addEventListener('click', async function() {
+            try {
+                const querySnapshot = await window.getDocs(window.collection(window.db, 'userDetails'));
+                const allData = [];
+                
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    data.id = doc.id;
+                    allData.push(data);
+                });
+                
+                // Create and download JSON file
+                const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', 'firebase_user_data.json');
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+            } catch (error) {
+                console.error('Error exporting data:', error);
+                showError('Failed to export data from Firebase.');
+            }
+        });
+
+        // Auto-hide messages after 5 seconds
+        setInterval(() => {
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            if (!successMsg.classList.contains('hidden')) {
+                setTimeout(() => {
+                    successMsg.classList.add('hidden');
+                }, 5000);
+            }
+            
+            if (!errorMsg.classList.contains('hidden')) {
+                setTimeout(() => {
+                    errorMsg.classList.add('hidden');
+                }, 5000);
+            }
+        }, 1000);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9875a08871e6a75d',t:'MTc1OTI1NTMwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
