@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+<<<<<<< HEAD
     <h1 style="color:blue;" >Hello, World!</h1>
     <p>This is a sample HTML document.</p>  
     <Button style="background-color:blue; color:white; padding:10px; border:none; border-radius:5px;">
@@ -14,3 +15,21 @@
     
 </body>
 </html>
+=======
+    <div>
+        <Button id="btn">
+            <var>Click Me</var>
+        </Button>
+    </div>
+</body>
+</html>
+<script>
+    const button = document.getElementById("btn");
+    button.addEventListener("click",()=>{
+        button.innerHTML = "You Clicked Me";
+    });
+    button.addEventListener("dblclick",()=>{
+        button.innerHTML = "You Double Clicked Me";
+    });
+</script>
+>>>>>>> feature-branch
