@@ -26,6 +26,7 @@ Portfolio website :
             5. Generative Adversarial Networks (GANs)
             6. Natural Language Processing (NLP)
             7. Recommender Systems
+            8. Time Series Analysis
 
 
         
