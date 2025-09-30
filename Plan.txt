@@ -1,1 +1,32 @@
 We are doing great!
+Portfolio website : 
+    Name : Adarsh Kumar
+    Degree : B.Tech AI & DS
+    College : IIT Jodhpur
+    Email : b25cm1067@iitj.ac.in
+
+    GitHub : https://github.com/adarshkushawaha
+    LinkedIn : https://www.linkedin.com/in/adarshkumar2151
+
+    Skills : C , C++ , Python , HTML , CSS , JavaScript , ReactJS , NodeJS , ExpressJS , MongoDB , SQL , Data Structures and Algorithms
+    Projects :
+        1. Portfolio Website
+        2. E-commerce Website
+        3. Blog Website
+        4. Chat Application
+        5. To-Do List Application
+    
+    More Deep Projects Under Development...
+        Separating Best Images from a video using Python and OpenCV and pytorch, tenserflow
+            AI and ML based Projects
+            1. Image Classification
+            2. Object Detection
+            3. Image Segmentation
+            4. Style Transfer
+            5. Generative Adversarial Networks (GANs)
+            6. Natural Language Processing (NLP)
+            7. Recommender Systems
+
+
+        
+
