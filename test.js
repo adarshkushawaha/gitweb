@@ -8,23 +8,24 @@
 
 console.log("Welcome to javascript  world  ____ This is console log");
 
-// <!-- <!-- <script> -->
-//     <!-- console.log("printstar"); 
-//     alert("error");
-//     document.write("this is document")
-//     console.warn("this is warn")
-//     console.error("this is error") -->
+// <!-- <!-- <script> --> prereq
+console.log("printstar"); 
+// alert("This is an alert "); // pop up on browser
+// document.write("this is document") // write on html page
+// console.warn("this is warn") // warning in console
+// console.error("this is error") 
 
+// semicolon is optional in javascript but it is good practice to use it
 
 // variables in javascript
 // var num1 = 45
 // var num= 75
-// console.log(num1+num)    
+// console.log(num1+num) // donot require to mention the datatype of variable   
 
 // // String in javascript
 // str = "here is a string ";
 // str1 = "here is a another script ";
-// console.log(str,str1);
+// console.log(str,str1); // 
 
 // // object data type  in javascript
 // var marks={
@@ -32,16 +33,19 @@ console.log("Welcome to javascript  world  ____ This is console log");
 //     sohan : 48,
 //     shubham:95
 // }
-// console.log(marks)
+// console.log(marks) // it is like dictionary in python
 
-// // The buliaan type datatype in javascript
+// // The boolean type datatype in javascript
 // var a = true
 // var b = false
-// console.log(a,b)
+// c= false // it is also boolean type
+// // no need to mention the datatype but 
+// c = "if"
+// console.log(a,b,c)
 
 // // the undefined variable in javascript
 // var und;
-// console.log(und)
+// console.log(und) // why we in c declared variable but not assigned any value to it
 // // it shows undefined
 
 // // the null datatype in javascript
@@ -62,7 +66,7 @@ var arr=[1,5,8,6,"uiruri",35,"as",4];
 // console.log(element)
 // });
 
-// // Method of array
+// // Methods of array
 
 // // length
 // console.log(arr.length)
