@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Professional Portfolio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #333e4f; /* GitHub Dark Mode BG */
+            color: #c9d1d9; /* Light gray text */
+        }
+
+        /* Custom utility for smooth scrolling to anchor links */
+        .smooth-scroll {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .section-header {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50%;
+            height: 4px;
+            background-color: #6366f1; /* Indigo accent */
+            border-radius: 9999px;
+        }
+
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #161b22;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444c56;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-[#161b22]/90 backdrop-blur-sm shadow-xl border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#hero" class="text-2xl font-bold text-indigo-400 hover:text-indigo-300 transition duration-300">
+                        Adarsh Kumar
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#about" class="smooth-scroll px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition">About</a>
+                        <a href="#skills" class="smooth-scroll px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition">Skills</a>
+                        <a href="#projects" class="smooth-scroll px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition">Projects</a>
+                        <a href="#contact" class="smooth-scroll px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition">Contact</a>
+                    </div>
+                </div>
+                <!-- Mobile Menu Button (Hamburger) -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" class="smooth-scroll block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition">About</a>
+                <a href="#skills" class="smooth-scroll block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition">Skills</a>
+                <a href="#projects" class="smooth-scroll block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition">Projects</a>
+                <a href="#contact" class="smooth-scroll block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- 1. Hero Section -->
+        <section id="hero" class="relative overflow-hidden pt-24 pb-32 md:pt-40 md:pb-48">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="inline-block p-1 rounded-full bg-gray-800/50 border border-indigo-500/50 mb-6 shadow-lg">
+                    <img src="https://placehold.co/120x120/1f2937/a5b4fc?text=JD" alt="Profile Picture" class="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-indigo-500/70">
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight text-white mb-4">
+                    Hi, I'm <span class="text-indigo-400">Jane Doe</span>
+                </h1>
+                
+                <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-400">
+                    A Full Stack Developer specializing in **modern web architectures** and building scalable, user-centric applications.
+                </p>
+
+                <div class="mt-10 flex flex-wrap justify-center gap-4">
+                    <a href="#projects" class="smooth-scroll px-8 py-3 text-lg font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-600/30 transition transform hover:scale-105">
+                        View Projects
+                    </a>
+                    <a href="#contact" class="smooth-scroll px-8 py-3 text-lg font-medium rounded-full text-indigo-400 bg-gray-800 hover:bg-gray-700 border border-indigo-400 transition transform hover:scale-105">
+                        Get In Touch
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. About Section -->
+        <section id="about" class="py-16 md:py-24 border-t border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-white section-header">About Me</h2>
+                <div class="mt-8 grid md:grid-cols-2 gap-10 items-center">
+                    <div class="space-y-6 text-lg text-gray-400">
+                        <p>
+                            I'm a passionate developer with 5+ years of experience transforming complex ideas into elegant, functional software. My journey in tech started with a fascination for how code could solve real-world problems.
+                        </p>
+                        <p>
+                            I thrive in environments that value **innovation, collaboration, and continuous learning**. While my roots are deep in **JavaScript, React, and Node.js**, I'm always eager to explore new frameworks and technologies to deliver the best possible solutions.
+                        </p>
+                        <p>
+                            Outside of coding, you can find me hiking the local trails or reading about astrophysics. Let's build something amazing together!
+                        </p>
+                    </div>
+                    <div class="p-6 bg-gray-800 rounded-xl shadow-2xl border border-gray-700">
+                        <h3 class="text-xl font-semibold text-white mb-4">Quick Facts</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center text-gray-300">
+                                <span class="text-indigo-400 mr-3">🚀</span> Currently building: **AI-powered productivity tools**
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <span class="text-indigo-400 mr-3">🎓</span> Education: **B.S. Computer Science**
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <span class="text-indigo-400 mr-3">📍</span> Location: **San Francisco, CA**
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Skills Section -->
+        <section id="skills" class="py-16 md:py-24 border-t border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-white section-header">Technical Skills</h2>
+                <p class="mb-10 text-xl text-gray-400">A snapshot of my core competencies and toolset.</p>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Skill Card Template -->
+                    <div class="p-6 bg-gray-800 rounded-xl border border-gray-700 hover:shadow-indigo-500/20 shadow-xl transition transform hover:scale-[1.02]">
+                        <div class="text-4xl text-indigo-400 mb-3">JS</div>
+                        <h3 class="text-xl font-semibold text-white">JavaScript/TypeScript</h3>
+                        <p class="text-gray-400 text-sm mt-1">Modern syntax, ES6+, strong typing.</p>
+                    </div>
+                    
+                    <div class="p-6 bg-gray-800 rounded-xl border border-gray-700 hover:shadow-indigo-500/20 shadow-xl transition transform hover:scale-[1.02]">
+                        <div class="text-4xl text-indigo-400 mb-3">⚛️</div>
+                        <h3 class="text-xl font-semibold text-white">React & Next.js</h3>
+                        <p class="text-gray-400 text-sm mt-1">Component-based UI, SSR/SSG.</p>
+                    </div>
+
+                    <div class="p-6 bg-gray-800 rounded-xl border border-gray-700 hover:shadow-indigo-500/20 shadow-xl transition transform hover:scale-[1.02]">
+                        <div class="text-4xl text-indigo-400 mb-3">🗄️</div>
+                        <h3 class="text-xl font-semibold text-white">Node.js & Express</h3>
+                        <p class="text-gray-400 text-sm mt-1">RESTful APIs, backend services.</p>
+                    </div>
+
+                    <div class="p-6 bg-gray-800 rounded-xl border border-gray-700 hover:shadow-indigo-500/20 shadow-xl transition transform hover:scale-[1.02]">
+                        <div class="text-4xl text-indigo-400 mb-3">💾</div>
+                        <h3 class="text-xl font-semibold text-white">Databases (SQL/NoSQL)</h3>
+                        <p class="text-gray-400 text-sm mt-1">PostgreSQL, MongoDB, Firestore.</p>
+                    </div>
+
+                    <div class="p-6 bg-gray-800 rounded-xl border border-gray-700 hover:shadow-indigo-500/20 shadow-xl transition transform hover:scale-[1.02]">
+                        <div class="text-4xl text-indigo-400 mb-3">☁️</div>
+                        <h3 class="text-xl font-semibold text-white">Cloud Services</h3>
+                        <p class="text-gray-400 text-sm mt-1">AWS (S3, Lambda), Firebase.</p>
+                    </div>
+
+                    <div class="p-6 bg-gray-800 rounded-xl border border-gray-700 hover:shadow-indigo-500/20 shadow-xl transition transform hover:scale-[1.02]">
+                        <div class="text-4xl text-indigo-400 mb-3">🎨</div>
+                        <h3 class="text-xl font-semibold text-white">HTML & Tailwind</h3>
+                        <p class="text-gray-400 text-sm mt-1">Semantic markup, responsive design.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 4. Projects Section -->
+        <section id="projects" class="py-16 md:py-24 border-t border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-white section-header">Recent Work</h2>
+                <p class="mb-10 text-xl text-gray-400">A few highlights showcasing my versatility and problem-solving.</p>
+                
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Project Card 1 -->
+                    <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700 transition duration-300 hover:ring-2 ring-indigo-500">
+                        <img src="https://placehold.co/800x450/1e40af/ffffff?text=Project+Atlas" alt="Project Atlas Mockup" class="w-full h-48 object-cover border-b border-gray-700">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold text-white mb-2">Project Atlas (SaaS Platform)</h3>
+                            <p class="text-gray-400 mb-4">A complete platform for managing remote team collaboration. Features real-time document editing and multi-factor authentication.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs font-medium bg-indigo-900/50 text-indigo-300 px-3 py-1 rounded-full">React</span>
+                                <span class="text-xs font-medium bg-indigo-900/50 text-indigo-300 px-3 py-1 rounded-full">Node.js</span>
+                                <span class="text-xs font-medium bg-indigo-900/50 text-indigo-300 px-3 py-1 rounded-full">PostgreSQL</span>
+                            </div>
+                            <a href="#" target="_blank" class="inline-flex items-center text-indigo-400 hover:text-indigo-300 font-medium transition">
+                                View Demo 
+                                <span class="ml-1">→</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2 -->
+                    <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700 transition duration-300 hover:ring-2 ring-indigo-500">
+                        <img src="https://placehold.co/800x450/7c3aed/ffffff?text=AI+Chatbot" alt="AI Chatbot Mockup" class="w-full h-48 object-cover border-b border-gray-700">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold text-white mb-2">Intelligent Chatbot Service</h3>
+                            <p class="text-gray-400 mb-4">Developed a scalable microservice architecture for a customer support AI that reduced query response time by 40%.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="text-xs font-medium bg-indigo-900/50 text-indigo-300 px-3 py-1 rounded-full">Python</span>
+                                <span class="text-xs font-medium bg-indigo-900/50 text-indigo-300 px-3 py-1 rounded-full">AWS Lambda</span>
+                                <span class="text-xs font-medium bg-indigo-900/50 text-indigo-300 px-3 py-1 rounded-full">Gemini API</span>
+                            </div>
+                            <a href="#" target="_blank" class="inline-flex items-center text-indigo-400 hover:text-indigo-300 font-medium transition">
+                                View Code 
+                                <span class="ml-1">→</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Contact Section -->
+        <section id="contact" class="py-16 md:py-24 border-t border-gray-800">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-white section-header">Get In Touch</h2>
+                <p class="mb-10 text-xl text-gray-400">Have a project idea or want to chat? Send me a message!</p>
+                
+                <form id="contact-form" class="space-y-6 p-8 bg-gray-800 rounded-xl shadow-2xl border border-gray-700">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Name</label>
+                        <input type="text" id="name" name="name" required class="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 transition">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 transition">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Message</label>
+                        <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 transition"></textarea>
+                    </div>
+                    <button type="submit" class="w-full px-4 py-3 text-lg font-semibold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-600/30 transition transform hover:scale-[1.01]">
+                        Send Message
+                    </button>
+                    <!-- Success/Error Message Display -->
+                    <div id="form-message" class="mt-4 p-3 rounded-lg text-center hidden" role="alert"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-8 border-t border-gray-800 bg-[#161b22]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+            <p>&copy; 2025 Jane Doe. All rights reserved. | Built with HTML & Tailwind CSS.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true' || false;
+                mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu on link click
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+
+            // 2. Contact Form Submission (Mock)
+            const contactForm = document.getElementById('contact-form');
+            const formMessage = document.getElementById('form-message');
+
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                // Show "Sending..." status
+                const submitButton = contactForm.querySelector('button[type="submit"]');
+                const originalText = submitButton.textContent;
+                submitButton.textContent = 'Sending...';
+                submitButton.disabled = true;
+
+                // Simulate network delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                // Mock success
+                formMessage.classList.remove('hidden', 'bg-red-900/50', 'text-red-300');
+                formMessage.classList.add('bg-green-900/50', 'text-green-300');
+                formMessage.textContent = 'Message sent successfully! I will get back to you soon.';
+                
+                // Reset form and button
+                contactForm.reset();
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+                
+                // Hide message after a few seconds
+                setTimeout(() => {
+                    formMessage.classList.add('hidden');
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>
